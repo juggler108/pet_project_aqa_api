@@ -10,7 +10,7 @@ class TestUserAuth(BaseCase):
         "no_token"
     ]
 
-    def setup(self):
+    def setup_method(self):
         data = {
             "email": "vinkotov@example.com",
             "password": "1234"
@@ -23,6 +23,9 @@ class TestUserAuth(BaseCase):
         self.user_id_from_auth_method = self.get_json_value(response1, "user_id")
 
     def test_auth_user(self):
+        print(self.token)
+        print(self.auth_sid)
+        print(self.user_id_from_auth_method)
 
         response2 = requests.get(
             url="https://playground.learnqa.ru/api/user/auth",
