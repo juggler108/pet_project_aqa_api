@@ -45,3 +45,7 @@ class Assertions:
     def assert_code_status(response: Response, expected_status_code):
         assert response.status_code == expected_status_code, \
             f"Unexpected status code! Expected: {response.status_code}. Actual: {expected_status_code}"
+
+    @staticmethod
+    def assert_values_is_not_equal_after_edit(value1, value2):
+        assert value1 != value2, f"{value1} did not change and is equal {value2}"
