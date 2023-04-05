@@ -1,14 +1,13 @@
-import requests
 from lib.assertions import Assertions
-
 from lib.base_case import BaseCase
+from lib.my_requests import MyRequests
 
 
 class TestUserEdit(BaseCase):
     # REGISTER
     def test_edit_just_created_user(self):
         register_data = self.prepare_registration_data()
-        response1 = requests.post(
+        response1 = MyRequests.post(
             url="https://playground.learnqa.ru/api/user/",
             data=register_data)
 
@@ -26,7 +25,7 @@ class TestUserEdit(BaseCase):
             "password": password
         }
 
-        response2 = requests.post(
+        response2 = MyRequests.post(
             url="https://playground.learnqa.ru/api/user/login",
             data=login_data)
 
@@ -36,7 +35,7 @@ class TestUserEdit(BaseCase):
         # EDIT
         new_name = "Changed Name"
 
-        response3 = requests.put(
+        response3 = MyRequests.put(
             url=f"https://playground.learnqa.ru/api/user/{user_id}",
             headers={"x-csrf-token": token},
             cookies={"auth_sid": auth_sid},
@@ -46,7 +45,7 @@ class TestUserEdit(BaseCase):
         Assertions.assert_code_status(response3, 200)
 
         # GET
-        response4 = requests.get(
+        response4 = MyRequests.get(
             url=f"https://playground.learnqa.ru/api/user/{user_id}",
             headers={"x-csrf-token": token},
             cookies={"auth_sid": auth_sid}
