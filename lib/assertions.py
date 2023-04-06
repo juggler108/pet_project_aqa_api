@@ -49,3 +49,12 @@ class Assertions:
     @staticmethod
     def assert_values_is_not_equal_after_edit(value1, value2):
         assert value1 != value2, f"Name before editing '{value1}' did not change and is equal '{value2}'"
+
+    @staticmethod
+    def assert_message_about_deleting_registered_users(response: Response):
+        assert response.text == "Please, do not delete test users with ID 1, 2, 3, 4 or 5.", \
+            f"Response answer is not correct"
+
+    @staticmethod
+    def assert_user_not_found_message(response: Response):
+        assert response.text == "User not found", "There is no info message 'User not found'"

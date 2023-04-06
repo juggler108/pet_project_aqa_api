@@ -1,9 +1,13 @@
+import allure
 from lib.my_requests import MyRequests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
+from configuration import REGISTERED_USER_DATA
 
 
+@allure.epic("Get info about users cases")
 class TestUserGetInfo(BaseCase):
+    @allure.description("This test check getting info about not authorization user")
     def test_get_user_info_not_auth(self):
         response = MyRequests.get("https://playground.learnqa.ru/api/user/2")
 
@@ -12,11 +16,9 @@ class TestUserGetInfo(BaseCase):
         Assertions.assert_json_has_not_key(response=response, name="firstName")
         Assertions.assert_json_has_not_key(response=response, name="lastName")
 
+    @allure.description("This test check getting details about authorization user")
     def test_get_user_details_auth_as_same_user(self):
-        data = {
-            "email": "vinkotov@example.com",
-            "password": "1234"
-        }
+        data = REGISTERED_USER_DATA
 
         response1 = MyRequests.post("https://playground.learnqa.ru/api/user/login", data=data)
 

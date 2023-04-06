@@ -1,11 +1,14 @@
+import allure
 from lib.assertions import Assertions
 from lib.base_case import BaseCase
 from lib.my_requests import MyRequests
 
 
+@allure.epic("Edit user cases")
 class TestUserEdit(BaseCase):
-    # REGISTER
+    @allure.description("This test check editing just created user")
     def test_edit_just_created_user(self):
+        # REGISTER
         register_data = self.prepare_registration_data()
         response1 = MyRequests.post(
             url="https://playground.learnqa.ru/api/user/",
