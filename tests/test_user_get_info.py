@@ -9,7 +9,7 @@ from configuration import REGISTERED_USER_DATA
 class TestUserGetInfo(BaseCase):
     @allure.description("This test check getting info about not authorization user")
     def test_get_user_info_not_auth(self):
-        response = MyRequests.get("https://playground.learnqa.ru/api/user/2")
+        response = MyRequests.get(uri="/user/2")
 
         Assertions.assert_json_has_key(response=response, name="username")
         Assertions.assert_json_has_not_key(response=response, name="email")
@@ -20,14 +20,14 @@ class TestUserGetInfo(BaseCase):
     def test_get_user_details_auth_as_same_user(self):
         data = REGISTERED_USER_DATA
 
-        response1 = MyRequests.post("https://playground.learnqa.ru/api/user/login", data=data)
+        response1 = MyRequests.post(uri="/user/login", data=data)
 
         auth_sid = self.get_cookie(response1, "auth_sid")
         token = self.get_header(response1, "x-csrf-token")
         user_id_from_auth_method = self.get_json_value(response1, "user_id")
 
         response2 = MyRequests.get(
-            url=f"https://playground.learnqa.ru/api/user/{user_id_from_auth_method}",
+            uri=f"/user/{user_id_from_auth_method}",
             headers={"x-csrf-token": token},
             cookies={"auth_sid": auth_sid}
         )

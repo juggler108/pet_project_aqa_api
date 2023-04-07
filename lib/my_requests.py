@@ -1,31 +1,34 @@
 import allure
 import requests
 from lib.logger import Logger
+from configuration import BASE_URL
 
 
 class MyRequests:
     @staticmethod
-    def get(url: str, params: dict = None, headers: dict = None, cookies: dict = None):
-        with allure.step(f"GET request to URL '{url}'"):
-            return MyRequests._send(url, params, headers, cookies, "GET")
+    def get(uri: str, params: dict = None, headers: dict = None, cookies: dict = None):
+        with allure.step(f"GET request to URL '{BASE_URL}{uri}'"):
+            return MyRequests._send(uri, params, headers, cookies, "GET")
 
     @staticmethod
-    def post(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
-        with allure.step(f"POST request to URL '{url}'"):
-            return MyRequests._send(url, data, headers, cookies, "POST")
+    def post(uri: str, data: dict = None, headers: dict = None, cookies: dict = None):
+        with allure.step(f"POST request to URL '{BASE_URL}{uri}'"):
+            return MyRequests._send(uri, data, headers, cookies, "POST")
 
     @staticmethod
-    def put(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
-        with allure.step(f"PUT request to URL '{url}'"):
-            return MyRequests._send(url, data, headers, cookies, "PUT")
+    def put(uri: str, data: dict = None, headers: dict = None, cookies: dict = None):
+        with allure.step(f"PUT request to URL '{BASE_URL}{uri}'"):
+            return MyRequests._send(uri, data, headers, cookies, "PUT")
 
     @staticmethod
-    def delete(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
-        with allure.step(f"DELETE request to URL '{url}'"):
-            return MyRequests._send(url, data, headers, cookies, "DELETE")
+    def delete(uri: str, data: dict = None, headers: dict = None, cookies: dict = None):
+        with allure.step(f"DELETE request to URL '{BASE_URL}{uri}'"):
+            return MyRequests._send(uri, data, headers, cookies, "DELETE")
 
     @staticmethod
-    def _send(url: str, data: dict, headers: dict, cookies: dict, method: str):
+    def _send(uri: str, data: dict, headers: dict, cookies: dict, method: str):
+        url = f"{BASE_URL}{uri}"
+
         if headers is None:
             headers = {}
         if cookies is None:
